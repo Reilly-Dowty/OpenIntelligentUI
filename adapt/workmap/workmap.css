@@ -1,0 +1,43 @@
+/* Work map: the chat's tool-activity diagram, drawn in the OpenIntelligentUI
+   design language (color-ramp diagram cards from CopilotKit/OpenIntelligentUI
+   packages/design-system). Scoped tokens, light values first; the app's dark
+   themes override. */
+.workmap {
+  --oi-blue-bg: #e6f1fb; --oi-blue-line: #185fa5; --oi-blue-text: #0c447c;
+  --oi-teal-bg: #e1f5ee; --oi-teal-line: #0f6e56; --oi-teal-text: #085041;
+  --oi-amber-bg: #faeeda; --oi-amber-line: #854f0b; --oi-amber-text: #633806;
+  --oi-purple-bg: #eeedfe; --oi-purple-line: #534ab7; --oi-purple-text: #3c3489;
+  --oi-red-bg: #fcebeb; --oi-red-line: #a32d2d; --oi-red-text: #791f1f;
+  --oi-gray-bg: #f1efe8; --oi-gray-line: #5f5e5a; --oi-gray-text: #444441;
+  --oi-lead: var(--line);
+}
+:where([data-theme="dark"], [data-theme="glass"], [data-theme="mocha"], [data-theme="nord"]) .workmap {
+  --oi-blue-bg: #0c447c; --oi-blue-line: #85b7eb; --oi-blue-text: #b5d4f4;
+  --oi-teal-bg: #085041; --oi-teal-line: #5dcaa5; --oi-teal-text: #9fe1cb;
+  --oi-amber-bg: #633806; --oi-amber-line: #ef9f27; --oi-amber-text: #fac775;
+  --oi-purple-bg: #3c3489; --oi-purple-line: #afa9ec; --oi-purple-text: #cecbf6;
+  --oi-red-bg: #791f1f; --oi-red-line: #f09595; --oi-red-text: #f7c1c1;
+  --oi-gray-bg: #444441; --oi-gray-line: #b4b2a9; --oi-gray-text: #d3d1c7;
+}
+/* Nodes slide in once, then stay; running nodes pulse. With reduced motion the
+   map stands still and every state is still readable by colour. */
+.workmap .wm-node {
+  animation: wm-in 0.35s var(--ease-ui) both;
+  cursor: pointer;
+}
+.workmap .wm-node rect { transition: opacity var(--dur-fast) var(--ease-ui); }
+.workmap .wm-node:hover rect { opacity: 0.85; }
+.workmap .wm-node:focus-visible { outline: none; }
+.workmap .wm-node:focus-visible rect { stroke-width: 2.5; }
+.workmap .wm-live rect { animation: wm-live 1.2s ease-in-out infinite; }
+@keyframes wm-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes wm-live {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workmap .wm-node, .workmap .wm-live rect { animation: none; }
+}
